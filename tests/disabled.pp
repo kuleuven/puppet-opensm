@@ -1,0 +1,3 @@
+class { 'opensm':
+  enabled => false,
+}
