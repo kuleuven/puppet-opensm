@@ -29,7 +29,7 @@ class { 'opensm':
   priority      => ...,         # subnet manager priority <0,15>
   guids         => ...,         # list port GUIDs to start on
   options       => {},          # hash of options for opensm.conf
-  packages      => [],          # override list of packages to install
+  packages      => [...],       # override list of packages to install
   configuration => '...',       # override absolute path and name to opensm.conf
   config_class  => '...',       # override internal configuration class
   service       => '...',       # override service name
