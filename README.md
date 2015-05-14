@@ -7,7 +7,7 @@ This module installs, configures and starts Inifiniband OpenSM.
 Module has been tested on:
 
 * Puppet 3.7
-* Debian and RHEL/CentOS 6
+* Debian 7, 8 and RHEL/CentOS 6, 7
 
 Required modules:
 
