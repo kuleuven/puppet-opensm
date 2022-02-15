@@ -12,7 +12,7 @@ class opensm::params {
       $config_class = 'debian'
     }
 
-    redhat,centos,scientific,oraclelinux,fedora: {
+    redhat,centos,scientific,oraclelinux,fedora,rocky,almalinux: {
       $guids = ''
       $service = 'opensm'
       $configuration = '/etc/rdma/opensm.conf'
