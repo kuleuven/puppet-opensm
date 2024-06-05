@@ -1,25 +1,14 @@
 class opensm (
-  $enabled       = $opensm::params::enabled,
-  $priority      = $opensm::params::priority,
-  $guids         = $opensm::params::guids,
-  $options       = $opensm::params::options,
-  $packages      = $opensm::params::packages,
-  $configuration = $opensm::params::configuration,
-  $config_class  = $opensm::params::config_class,
-  $service       = $opensm::params::service
+  Boolean $enabled      = $opensm::params::enabled,
+  $priority             = $opensm::params::priority,
+  $guids                = $opensm::params::guids,
+  Hash $options         = $opensm::params::options,
+  Array $packages       = $opensm::params::packages,
+  $configuration        = $opensm::params::configuration,
+  String $config_class  = $opensm::params::config_class,
+  String $service       = $opensm::params::service
 ) inherits opensm::params {
 
-  validate_bool($enabled)
-  #validate_integer($priority)
-  validate_hash($options)
-  validate_array($packages)
-  validate_string($config_class, $service)
-
-  if is_array($configuration) or is_string($configuration) {
-    #validate_absolute_path($configuration)
-  } else {
-    fail('configuration must be string or array of strings')
-  }
 
   class { 'opensm::install':
     enabled  => $enabled,
