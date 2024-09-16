@@ -1,20 +1,16 @@
 define opensm::fileconf (
-  $filename = $title,
-  $options  = {},
-  $override = {},
+  Stdlib::Absolutepath $filename = $title,
+  Hash $options  = {},
+  Hash $override = {},
 ) {
-  validate_hash($override)
-  validate_hash($options)
-  if has_key($options, $filename) and is_hash($options[$filename]) {
+  if $filename in $options {
     $_options = merge($options[$filename], $override)
   } else {
     $_options = merge($options, $override)
   }
 
-  $_keys = keys($_options)
-  $_vals = values($_options)
-  validate_array($_keys, $_vals)
-  validate_absolute_path($filename)
+  $_keys = $_options.keys
+  $_vals = $_options.values
 
   exec { "opensm-create-${filename}":
     command => "/usr/sbin/opensm -c ${filename}",
@@ -28,9 +24,7 @@ define opensm::fileconf (
     $_aug_vals1 = regsubst($_vals, '"', '\'', 'G') #TODO
     $_aug_vals2 = regsubst($_aug_vals1, '^\s*$', '(null)')
     $_aug_vals3 = regsubst($_aug_vals2, '^(.*)$', '"\1"')
-    $_changes   = join_keys_to_values(
-      hash(flatten(zip($_aug_keys, $_aug_vals3))),
-      ' ')
+    $_changes   = $_aug_keys.zip($_aug_vals3).map |$pair| { "${pair[0]} ${pair[1]}" }.join(' ')
 
     augeas { $filename:
       lens    => 'OpenSM.lns',
