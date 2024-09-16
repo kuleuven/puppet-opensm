@@ -24,7 +24,7 @@ define opensm::fileconf (
     $_aug_vals1 = regsubst($_vals, '"', '\'', 'G') #TODO
     $_aug_vals2 = regsubst($_aug_vals1, '^\s*$', '(null)')
     $_aug_vals3 = regsubst($_aug_vals2, '^(.*)$', '"\1"')
-    $_changes   = join_keys_to_values(flatten(zip($_aug_keys, $_aug_vals3)), ' ')
+    $_changes   = $_aug_keys.zip($_aug_vals3).map |$pair| { "${pair[0]} ${pair[1]}" }.join(' ')
 
     augeas { $filename:
       lens    => 'OpenSM.lns',
