@@ -8,8 +8,6 @@ class opensm (
   String $config_class  = $opensm::params::config_class,
   String $service       = $opensm::params::service
 ) inherits opensm::params {
-
-
   class { 'opensm::install':
     enabled  => $enabled,
     packages => $packages,
@@ -29,14 +27,14 @@ class opensm (
     }
 
     anchor { 'opensm::begin': ; }
-      -> Class['opensm::install']
-      -> Class["opensm::config::${config_class}"]
-      ~> Class['opensm::service']
-      -> anchor { 'opensm::end': ; }
+    -> Class['opensm::install']
+    -> Class["opensm::config::${config_class}"]
+    ~> Class['opensm::service']
+    -> anchor { 'opensm::end': ; }
   } else {
     anchor { 'opensm::begin': ; }
-      -> Class['opensm::service']
-      -> Class['opensm::install']
-      -> anchor { 'opensm::end': ; }
+    -> Class['opensm::service']
+    -> Class['opensm::install']
+    -> anchor { 'opensm::end': ; }
   }
 }
